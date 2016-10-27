@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/tournament_item_bg"
+    >
+
+
+
+       <RelativeLayout
+           android:id="@+id/game_item_header_container"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textAppearance="?android:attr/textAppearanceSmall"
+               android:text="Hari Prasaad"
+               android:id="@+id/textView"
+               android:layout_alignParentTop="true"
+               android:layout_alignParentStart="true"
+               android:textStyle="bold"/>
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textAppearance="?android:attr/textAppearanceSmall"
+               android:text="Ravi Shastri"
+               android:id="@+id/textView2"
+               android:layout_alignParentTop="true"
+               android:layout_alignParentEnd="true"
+               android:textStyle="bold" />
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textAppearance="?android:attr/textAppearanceSmall"
+               android:text="2470"
+               android:id="@+id/textView3"
+               android:layout_below="@+id/textView"
+               android:layout_alignStart="@+id/textView" />
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textAppearance="?android:attr/textAppearanceSmall"
+               android:text="0:22:22"
+               android:id="@+id/textView4"
+               android:layout_below="@+id/textView3"
+               android:layout_alignStart="@+id/textView3" />
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textAppearance="?android:attr/textAppearanceSmall"
+               android:text="2301"
+               android:id="@+id/textView5"
+               android:layout_above="@+id/textView4"
+               android:layout_alignEnd="@+id/textView2" />
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textAppearance="?android:attr/textAppearanceSmall"
+               android:text="0:32:34"
+               android:id="@+id/textView6"
+               android:layout_below="@+id/textView5"
+               android:layout_alignParentEnd="true" />
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textAppearance="?android:attr/textAppearanceSmall"
+               android:text="VS"
+               android:id="@+id/textView7"
+               android:layout_centerVertical="true"
+               android:layout_centerHorizontal="true"
+               android:textStyle="bold"/>
+
+       </RelativeLayout>
+
+    <com.frostox.livechess.customviews.Board
+
+        android:id="@+id/board"
+        android:layout_below="@+id/game_item_header_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
+        android:numColumns="8"
+        android:background="#ffffff"
+        android:rotationY="180"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        />
+
+
+
+</RelativeLayout>
