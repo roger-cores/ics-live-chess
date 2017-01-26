@@ -17,9 +17,17 @@ import com.frostox.livechess.R;
 import com.frostox.livechess.adapters.TournamentsAdapter;
 import com.frostox.livechess.adapters.TournamentsRecyclerAdapter;
 import com.frostox.livechess.entities.Tournament;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -29,6 +37,11 @@ public class TournamentsFragment extends Fragment implements AdapterView.OnItemC
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private RecyclerView tournamentsListView;
+
+    FirebaseDatabase database;
+    DatabaseReference tournamentsRef;
+    TournamentsRecyclerAdapter adapter;
+
 
     public TournamentsFragment() {}
 
@@ -47,8 +60,7 @@ public class TournamentsFragment extends Fragment implements AdapterView.OnItemC
 
         View rootView = inflater.inflate(R.layout.launch_fragment_tournaments, container, false);
         tournamentsListView = (RecyclerView) rootView.findViewById(R.id.tournaments_listView);
-        TournamentsRecyclerAdapter adapter = new TournamentsRecyclerAdapter(this.getActivity(), generateTournaments());
-        tournamentsListView.setAdapter(adapter);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         tournamentsListView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         tournamentsListView.setItemAnimator(new DefaultItemAnimator());
@@ -57,27 +69,66 @@ public class TournamentsFragment extends Fragment implements AdapterView.OnItemC
         tournamentsListView.addItemDecoration(dividerItemDecoration);
         //tournamentsListView.setOnItemClickListener(this);
 
+
+        database = FirebaseDatabase.getInstance();
+        tournamentsRef = database.getReference("tournaments");
+
+        tournamentsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                HashMap<String, Tournament> tournaments = new LinkedHashMap<String, Tournament>();
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                     tournaments.put(postSnapshot.getKey(), postSnapshot.getValue(Tournament.class));
+                }
+
+                adapter = new TournamentsRecyclerAdapter(getActivity() , tournaments);
+                tournamentsListView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+                tournamentsRef.removeEventListener(this);
+                tournamentsRef.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Tournament tournament = dataSnapshot.getValue(Tournament.class);
+                        adapter.getTournaments().put(dataSnapshot.getKey(), tournament);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        Tournament tournament = dataSnapshot.getValue(Tournament.class);
+                        adapter.getTournaments().put(dataSnapshot.getKey(), tournament);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        adapter.getTournaments().remove(dataSnapshot.getKey());
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d(TournamentsFragment.class.getName(), databaseError.getDetails());
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TournamentsFragment.class.getName(), databaseError.getDetails());
+            }
+        });
+
         return rootView;
 
 
-    }
-
-    public List<Tournament> generateTournaments(){
-        ArrayList<Tournament> tournaments = new ArrayList<>();
-        Calendar start = Calendar.getInstance();
-        Calendar end = Calendar.getInstance();
-        end.add(Calendar.DATE, 1);
-        start.add(Calendar.MONTH, -2);
-        tournaments.add(new Tournament("ICS: Under 17", start.getTime(), end.getTime(), null, false));
-        end.add(Calendar.MONTH, 5);
-        start.add(Calendar.MONTH, -3);
-        start.add(Calendar.DATE, -45);
-        end.add(Calendar.DATE, 6);
-        tournaments.add(new Tournament("ICS: Under 15", start.getTime(), end.getTime(), "Ravi Vs Hari", true));
-        start.add(Calendar.YEAR, -3);
-        end.add(Calendar.YEAR, -1);
-        tournaments.add(new Tournament("Fall 17", start.getTime(), end.getTime(), "Patel won with 8.5/11 pts!", false));
-        return tournaments;
     }
 
 

@@ -1,103 +1,328 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:id="@+id/game_item_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     android:layout_margin="10dp"
-    android:background="@drawable/tournament_item_bg"
-    >
+    android:background="@drawable/tournament_item_bg">
 
 
 
        <RelativeLayout
            android:id="@+id/game_item_header_container"
            android:layout_width="match_parent"
-           android:layout_height="wrap_content">
+           android:layout_height="wrap_content"
+>
 
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:textAppearance="?android:attr/textAppearanceSmall"
                android:text="Hari Prasaad"
-               android:id="@+id/textView"
+               android:id="@+id/game_item_p1_name"
                android:layout_alignParentTop="true"
                android:layout_alignParentStart="true"
-               android:textStyle="bold"/>
+               android:textStyle="bold"
+               android:layout_toStartOf="@+id/game_item_p1_name7"
+               android:singleLine="true"
+               android:layout_marginRight="30dp"/>
 
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:textAppearance="?android:attr/textAppearanceSmall"
                android:text="Ravi Shastri"
-               android:id="@+id/textView2"
+               android:id="@+id/game_item_p2_name"
                android:layout_alignParentTop="true"
                android:layout_alignParentEnd="true"
-               android:textStyle="bold" />
+               android:textStyle="bold"
+               android:gravity="right"
+               android:layout_toEndOf="@+id/game_item_p1_name7"
+               android:singleLine="true"
+               android:layout_marginLeft="30dp"/>
 
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:textAppearance="?android:attr/textAppearanceSmall"
                android:text="2470"
-               android:id="@+id/textView3"
-               android:layout_below="@+id/textView"
-               android:layout_alignStart="@+id/textView" />
+               android:id="@+id/game_item_p1_rtg"
+               android:layout_below="@+id/game_item_p1_name"
+               android:layout_alignStart="@+id/game_item_p1_name"
+               android:layout_toStartOf="@+id/game_item_p1_name7"
+               android:singleLine="true"
+               android:layout_marginRight="30dp" />
 
            <TextView
+               android:singleLine="true"
+               android:layout_marginRight="30dp"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:textAppearance="?android:attr/textAppearanceSmall"
                android:text="0:22:22"
-               android:id="@+id/textView4"
-               android:layout_below="@+id/textView3"
-               android:layout_alignStart="@+id/textView3" />
+               android:id="@+id/game_item_p1_time"
+               android:layout_below="@+id/game_item_p1_rtg"
+               android:layout_alignStart="@+id/game_item_p1_rtg"
+               android:layout_toStartOf="@+id/game_item_p1_name7"
+               android:visibility="gone"/>
 
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:textAppearance="?android:attr/textAppearanceSmall"
-               android:text="2301"
-               android:id="@+id/textView5"
-               android:layout_above="@+id/textView4"
-               android:layout_alignEnd="@+id/textView2" />
-
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textAppearance="?android:attr/textAppearanceSmall"
+               android:gravity="right"
                android:text="0:32:34"
-               android:id="@+id/textView6"
-               android:layout_below="@+id/textView5"
-               android:layout_alignParentEnd="true" />
+               android:id="@+id/game_item_p2_time"
+               android:layout_alignParentEnd="true"
+               android:singleLine="true"
+               android:visibility="gone"/>
 
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:textAppearance="?android:attr/textAppearanceSmall"
                android:text="VS"
-               android:id="@+id/textView7"
-               android:layout_centerVertical="true"
+               android:id="@+id/game_item_p1_name7"
                android:layout_centerHorizontal="true"
-               android:textStyle="bold"/>
+               android:textStyle="bold"
+               android:textSize="20sp"/>
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textAppearance="?android:attr/textAppearanceSmall"
+               android:text="Table 2"
+               android:id="@+id/game_item_table_no"
+               android:layout_centerHorizontal="true"
+               android:layout_below="@+id/game_item_p1_name7"
+               android:textStyle="italic"
+               android:textSize="15sp"/>
 
        </RelativeLayout>
 
-    <com.frostox.livechess.customviews.Board
+    <android.support.v7.widget.CardView
 
-        android:id="@+id/board"
-        android:layout_below="@+id/game_item_header_container"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:verticalSpacing="0dp"
-        android:horizontalSpacing="0dp"
-        android:numColumns="8"
-        android:background="#ffffff"
-        android:rotationY="180"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        />
+        android:layout_below="@+id/game_item_header_container"
+        android:elevation="200dp"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="@android:color/darker_gray"
 
+        android:clickable="false"
+        android:focusable="false">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+
+            android:clickable="false"
+            android:focusable="false">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:clickable="false"
+                android:focusable="false">
+
+                <LinearLayout
+                    android:id="@+id/left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignTop="@+id/board"
+                    android:layout_marginTop="15dp"
+                    android:layout_alignBottom="@+id/board"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+                    <TextView
+                        android:id="@+id/eight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:text="8"/>
+                    <TextView
+                        android:id="@+id/seven"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:text="7"/>
+                    <TextView
+                        android:id="@+id/six"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:text="6"/>
+                    <TextView
+                        android:id="@+id/five"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:text="5"/>
+                    <TextView
+                        android:id="@+id/four"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:text="4"/>
+                    <TextView
+                        android:id="@+id/three"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:text="3"/>
+                    <TextView
+                        android:id="@+id/two"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:text="2"/>
+                    <TextView
+                        android:id="@+id/one"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:text="1"/>
+                </LinearLayout>
+
+                <com.frostox.livechess.customviews.Board
+
+                    android:id="@+id/board"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:verticalSpacing="0dp"
+                    android:horizontalSpacing="0dp"
+                    android:numColumns="8"
+                    android:background="@android:color/darker_gray"
+                    android:rotationY="180"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="15dp"
+
+                    android:layout_toRightOf="@+id/left"
+
+
+                    />
+
+
+                <LinearLayout
+                    android:id="@+id/bottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/board"
+                    android:layout_alignLeft="@id/board"
+                    android:layout_alignRight="@+id/board"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp">
+                    <TextView
+                        android:id="@+id/a"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:text="a"/>
+                    <TextView
+                        android:id="@+id/b"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:text="b"/>
+                    <TextView
+                        android:id="@+id/c"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:text="c"/>
+                    <TextView
+                        android:id="@+id/d"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:text="d"/>
+                    <TextView
+                        android:id="@+id/e"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:text="e"/>
+                    <TextView
+                        android:id="@+id/f"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:text="f"/>
+                    <TextView
+                        android:id="@+id/g"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:text="g"/>
+                    <TextView
+                        android:id="@+id/h"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:text="h"/>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="2301"
+        android:id="@+id/game_item_p2_rtg"
+        android:singleLine="true"
+        android:gravity="right"
+        android:layout_alignBottom="@+id/game_item_header_container"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

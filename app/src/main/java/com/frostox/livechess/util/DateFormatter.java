@@ -1,5 +1,6 @@
 package com.frostox.livechess.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,6 +9,21 @@ import java.util.Date;
  * Created by roger on 10/24/2016.
  */
 public class DateFormatter {
+
+    public static String formatDateToFirebase(Date date){
+        return new SimpleDateFormat("dd/mm/yyyy").format(date);
+    }
+
+    public static Date parseDateFromFirebase(String date){
+        try {
+            return new SimpleDateFormat("dd/mm/yyyy").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     public static String formateDateRange(Date start, Date end) {
 
 

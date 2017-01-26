@@ -11,7 +11,21 @@ public class SQIWrapper implements Serializable {
     private boolean isBlack;
     private int color;
 
+    private Boolean isFromSqi = null;
+
     private boolean highLighted = false;
+
+    public void setBlack(boolean black) {
+        isBlack = black;
+    }
+
+    public Boolean getFromSqi() {
+        return isFromSqi;
+    }
+
+    public void setFromSqi(Boolean fromSqi) {
+        isFromSqi = fromSqi;
+    }
 
     public boolean isHighLighted() {
         return highLighted;

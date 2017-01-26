@@ -1,13 +1,16 @@
 package com.frostox.livechess.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.frostox.livechess.R;
+import com.frostox.livechess.activities.PGNViewerActivity;
 import com.frostox.livechess.entities.GameEntity;
 import com.frostox.livechess.viewholders.GamesViewHolder;
 import com.frostox.livechess.wrappers.SQIWrapper;
@@ -30,9 +33,13 @@ public class GamesRecyclerAdapter extends RecyclerView.Adapter<GamesViewHolder> 
     private List<GameEntity> games;
     private Activity activity;
 
-    public GamesRecyclerAdapter(Activity activity, List<GameEntity> games) {
+    private String tournamentKey, roundKey;
+
+    public GamesRecyclerAdapter(Activity activity, List<GameEntity> games, String tournamentKey, String roundKey) {
         this.activity = activity;
         this.games = games;
+        this.tournamentKey = tournamentKey;
+        this.roundKey = roundKey;
     }
 
     @Override
@@ -42,10 +49,48 @@ public class GamesRecyclerAdapter extends RecyclerView.Adapter<GamesViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(GamesViewHolder holder, int position) {
-        GameEntity game = games.get(position);
+    public void onBindViewHolder(final GamesViewHolder holder, int position) {
+        final GameEntity game = games.get(position);
         setUpGame(holder, game);
+        holder.getPlayer1().setText(game.getGame().getWhite());
+        holder.getPlayer2().setText(game.getGame().getBlack());
+        holder.getRtgPlayer1().setText(game.getGame().getWhiteEloStr());
+        holder.getRtgPlayer2().setText(game.getGame().getBlackEloStr());
+        holder.getResult().setText(game.getGame().getResultStr());
+        holder.getTableNo().setText("Table no: " + (position+1) + "");
 
+
+        holder.getContainer().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, PGNViewerActivity.class);
+                intent.putExtra("whitePlayer", game.getGame().getWhite());
+                intent.putExtra("blackPlayer", game.getGame().getBlack());
+                intent.putExtra("whitePlayerRTG", game.getGame().getWhiteEloStr());
+                intent.putExtra("blackPlayerRTG", game.getGame().getBlackEloStr());
+                intent.putExtra("tournamentKey", tournamentKey);
+                intent.putExtra("roundKey", roundKey);
+                intent.putExtra("tableNo", holder.getTableNo().getText());
+                activity.startActivity(intent);
+            }
+        });
+
+
+
+        holder.getBoard().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(activity, PGNViewerActivity.class);
+                intent.putExtra("whitePlayer", game.getGame().getWhite());
+                intent.putExtra("blackPlayer", game.getGame().getBlack());
+                intent.putExtra("whitePlayerRTG", game.getGame().getWhiteEloStr());
+                intent.putExtra("blackPlayerRTG", game.getGame().getBlackEloStr());
+                intent.putExtra("tournamentKey", tournamentKey);
+                intent.putExtra("roundKey", roundKey);
+                intent.putExtra("tableNo", holder.getTableNo().getText());
+                activity.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -60,20 +105,10 @@ public class GamesRecyclerAdapter extends RecyclerView.Adapter<GamesViewHolder> 
         for(int i=0; i<64; i++)
             sqis.add(new SQIWrapper(i+1));
         GridAdapter adapter = new GridAdapter(activity, activity.getLayoutInflater(), sqis);
+        adapter.flipBoard();
         holder.getBoard().setAdapter(adapter);
 
-        StringReader sReader = new StringReader(gameEntity.getPgn());
-        PGNReader pReader = new PGNReader(sReader, "name");
-        Game game = null;
-        try {
-            game = null;
-            game = pReader.parseGame();
-            adapter.setGame(game);
-        } catch (PGNSyntaxError pgnSyntaxError) {
-            pgnSyntaxError.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Game game = gameEntity.getGame();
 
         if(game == null) {
             return;
@@ -81,6 +116,8 @@ public class GamesRecyclerAdapter extends RecyclerView.Adapter<GamesViewHolder> 
 
 
         game.goBackToLineBegin();
+
+        while(game.goForward()){}
 
         Position position = game.getPosition();
         boolean flipped = false;
@@ -93,10 +130,35 @@ public class GamesRecyclerAdapter extends RecyclerView.Adapter<GamesViewHolder> 
 //
 //        if(!flipped) {
 
-            for (int i = 0; i < 64; i++) {
-                adapter.setPieceToSqi(position.getPiece(i), position.getColor(i), i);
+        int fromSqi, toSqi;
+        if(position.getLastMove()!=null){
+            fromSqi = position.getLastMove().getFromSqi();
+            toSqi = position.getLastMove().getToSqi();
+        }
+        else {
+            fromSqi = -1;
+            toSqi = -1;
+        }
 
+
+        for (int i = 0; i < 64; i++) {
+
+            int pieceSqi = i;
+
+            if(pieceSqi == fromSqi){
+                adapter.setPieceToSqi(position.getPiece(i), position.getColor(i), i, true);
             }
+            else if(pieceSqi == toSqi){
+                adapter.setPieceToSqi(position.getPiece(i), position.getColor(i), i, false);
+            }
+            else
+                adapter.setPieceToSqi(position.getPiece(i), position.getColor(i), i, null);
+
+        }
+
+
+
+
 
 //            flipIndexes();
 //        }

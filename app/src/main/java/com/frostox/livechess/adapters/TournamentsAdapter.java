@@ -1,22 +1,18 @@
 package com.frostox.livechess.adapters;
 
 import android.content.Context;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.frostox.livechess.R;
 import com.frostox.livechess.entities.Tournament;
 import com.frostox.livechess.util.DateFormatter;
 import com.frostox.livechess.viewholders.TournamentsViewHolder;
 
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,15 +57,15 @@ public class TournamentsAdapter extends ArrayAdapter<Tournament> {
             viewHolder = (TournamentsViewHolder) convertView.getTag();
         }
 
-        viewHolder.getTitle().setText(tournament.getTitle());
-        viewHolder.getSubTitle().setText(DateFormatter.formateDateRange(tournament.getStart(), tournament.getEnd()));
+        viewHolder.getTitle().setText(tournament.getName());
+        viewHolder.getSubTitle().setText(DateFormatter.formateDateRange(new Date(tournament.getDateStart()), new Date(tournament.getDateEnd())));
 
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
         Calendar now = Calendar.getInstance();
 
-        start.setTime(tournament.getStart());
-        end.setTime(tournament.getEnd());
+        start.setTime(new Date(tournament.getDateStart()));
+        end.setTime(new Date(tournament.getDateEnd()));
 
 
 

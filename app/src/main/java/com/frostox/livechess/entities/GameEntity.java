@@ -1,22 +1,22 @@
 package com.frostox.livechess.entities;
 
+import chesspresso.game.Game;
+
 /**
  * Created by roger on 10/27/2016.
  */
 public class GameEntity {
-    private String pgn;
+    private Game game;
 
-    public GameEntity(String pgn) {
-
-        this.pgn = pgn;
+    public GameEntity(Game game) {
+        this.game = game;
     }
 
-    public String getPgn() {
-        return pgn;
+    public Game getGame() {
+        return game;
     }
 
-    public void setPgn(String pgn) {
-        this.pgn = pgn;
+    public void setGame(Game game) {
+        this.game = game;
     }
-
 }

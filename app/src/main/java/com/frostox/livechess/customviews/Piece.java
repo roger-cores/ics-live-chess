@@ -20,6 +20,8 @@ public class Piece extends ImageView {
         super(context, attrs, defStyleAttr);
     }
 
+
+
     @Override
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec)
     {

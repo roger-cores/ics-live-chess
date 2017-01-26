@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "573085776272",
+    "firebase_url": "https://ics-live.firebaseio.com",
+    "project_id": "ics-live",
+    "storage_bucket": "ics-live.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573085776272:android:d17dea91ebe6854a",
+        "android_client_info": {
+          "package_name": "com.frostox.livechess"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "573085776272-gqvhecc2gmggkprspvc43rnap2iit0i7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9gG9dMYQEdUPVlaowZyhnNWClHREotPA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

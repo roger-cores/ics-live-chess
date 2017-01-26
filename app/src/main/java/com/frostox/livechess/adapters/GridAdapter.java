@@ -66,9 +66,10 @@ public class GridAdapter extends BaseAdapter {
         this.game = game;
     }
 
-    public void setPieceToSqi(Integer piece, int color, int index){
+    public void setPieceToSqi(Integer piece, int color, int index, Boolean isFromSqi){
         sqis.get(index).setPiece(piece);
         sqis.get(index).setColor(color);
+        sqis.get(index).setFromSqi(isFromSqi);
     }
 
 
@@ -113,12 +114,14 @@ public class GridAdapter extends BaseAdapter {
            convertView = layoutInflater.inflate(R.layout.piece, null);
         }
 
-        if(sqi.isBlack())
-            convertView.setBackgroundColor(activity.getResources().getColor(R.color.black_bg));
-        else convertView.setBackgroundColor(activity.getResources().getColor(android.R.color.white));
-
-        if(sqi.isHighLighted()){
-            convertView.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
+        if(sqi.getFromSqi()== null){
+            if(sqi.isBlack())
+                convertView.setBackgroundColor(activity.getResources().getColor(R.color.black_bg));
+            else convertView.setBackgroundColor(activity.getResources().getColor(android.R.color.white));
+        } else if(sqi.getFromSqi()){
+            convertView.setBackgroundColor(activity.getResources().getColor(R.color.fromSqi));
+        } else {
+            convertView.setBackgroundColor(activity.getResources().getColor(R.color.toSqi));
         }
 
         final ImageView piece = (ImageView) convertView.findViewById(R.id.piece);

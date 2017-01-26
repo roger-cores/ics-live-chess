@@ -3,29 +3,34 @@ package com.frostox.livechess.adapters;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.frostox.livechess.R;
 import com.frostox.livechess.activities.RankActivity;
-import com.frostox.livechess.activities.TournamentActivity;
+import com.frostox.livechess.activities.TournamentActivityNew;
 import com.frostox.livechess.entities.Tournament;
 import com.frostox.livechess.util.DateFormatter;
 import com.frostox.livechess.viewholders.TournamentsViewHolder;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by roger on 10/27/2016.
  */
 public class TournamentsRecyclerAdapter extends RecyclerView.Adapter<TournamentsViewHolder> {
 
-    private List<Tournament> tournaments;
+
+
+    private HashMap<String, Tournament> tournaments;
     private Activity activity;
 
-    public TournamentsRecyclerAdapter(Activity activity, List<Tournament> tournaments) {
+    public TournamentsRecyclerAdapter(Activity activity, HashMap<String, Tournament> tournaments) {
         this.activity = activity;
         this.tournaments = tournaments;
     }
@@ -38,21 +43,25 @@ public class TournamentsRecyclerAdapter extends RecyclerView.Adapter<Tournaments
 
     @Override
     public void onBindViewHolder(final TournamentsViewHolder holder, int position) {
-        final Tournament tournament = tournaments.get(position);
-        holder.getTitle().setText(tournament.getTitle());
+        final Tournament tournament = new ArrayList<>(tournaments.values()).get(position);
+        final String key = new ArrayList<>(tournaments.keySet()).get(position);
+
+        holder.getTitle().setText(tournament.getName());
         String partialSubTitle = "";
         if(tournament.getStatus() != null){
             partialSubTitle = ", " + tournament.getStatus();
         }
 
-        holder.getSubTitle().setText(DateFormatter.formateDateRange(tournament.getStart(), tournament.getEnd()) + partialSubTitle);
+        holder.getSubTitle().setText(DateFormatter.formateDateRange(new Date(tournament.getDateStart()), new Date(tournament.getDateEnd())) + partialSubTitle);
 
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
         Calendar now = Calendar.getInstance();
 
-        start.setTime(tournament.getStart());
-        end.setTime(tournament.getEnd());
+        Log.d("date", new Date().getTime()+"");
+
+        start.setTime(new Date(tournament.getDateStart()));
+        end.setTime(new Date(tournament.getDateEnd()));
 
         if(tournament.getNotificationStatus()){
             holder.getNotificationButton().setImageResource(R.drawable.ic_action_notifications_button);
@@ -105,7 +114,8 @@ public class TournamentsRecyclerAdapter extends RecyclerView.Adapter<Tournaments
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, RankActivity.class);
-                intent.putExtra("name", tournament.getTitle());
+                intent.putExtra("name", tournament.getName());
+                intent.putExtra("key", key);
                 activity.startActivity(intent);
             }
         });
@@ -113,11 +123,20 @@ public class TournamentsRecyclerAdapter extends RecyclerView.Adapter<Tournaments
         holder.getContainer().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, TournamentActivity.class);
-                intent.putExtra("name", tournament.getTitle());
+                Intent intent = new Intent(activity, TournamentActivityNew.class);
+                intent.putExtra("name", tournament.getName());
+                intent.putExtra("key", key);
                 activity.startActivity(intent);
             }
         });
+    }
+
+    public HashMap<String, Tournament> getTournaments() {
+        return tournaments;
+    }
+
+    public void setTournaments(HashMap<String, Tournament> tournaments) {
+        this.tournaments = tournaments;
     }
 
     @Override

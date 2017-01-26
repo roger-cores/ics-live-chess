@@ -53,6 +53,7 @@
         android:id="@+id/rank_item_pts"
         android:layout_alignTop="@+id/rank_item_name"
         android:layout_alignParentEnd="true"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone"/>
 
 </RelativeLayout>

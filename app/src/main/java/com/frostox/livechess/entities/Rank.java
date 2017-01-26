@@ -1,9 +1,11 @@
 package com.frostox.livechess.entities;
 
+import java.util.Comparator;
+
 /**
  * Created by roger on 10/27/2016.
  */
-public class Rank {
+public class Rank implements Comparable<Rank>, Comparator<Rank> {
 
     private Integer rank;
 
@@ -61,5 +63,24 @@ public class Rank {
 
     public void setPts(Float pts) {
         this.pts = pts;
+    }
+
+
+    @Override
+    public int compareTo(Rank rank) {
+        if(this.getRtg() > rank.getRtg())
+            return 1;
+        else if(this.getRtg() < rank.getRtg())
+            return -1;
+        else return 0;
+    }
+
+    @Override
+    public int compare(Rank rank, Rank t1) {
+        if(this.getRtg() > rank.getRtg())
+            return 1;
+        else if(this.getRtg() < rank.getRtg())
+            return -1;
+        else return 0;
     }
 }

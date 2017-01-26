@@ -3,6 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-
+    <color name="white_bg">#ecf0f1</color>
     <color name="black_bg">#bdc3c7</color>
+    <color name="fromSqi">#1abc9c</color>
+    <color name="toSqi">#2ecc71</color>
 </resources>

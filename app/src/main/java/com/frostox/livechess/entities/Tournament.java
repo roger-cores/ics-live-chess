@@ -1,5 +1,8 @@
 package com.frostox.livechess.entities;
 
+import com.frostox.livechess.util.DateFormatter;
+
+import java.text.DateFormat;
 import java.util.Date;
 
 /**
@@ -7,11 +10,12 @@ import java.util.Date;
  */
 public class Tournament {
 
-    private String title;
 
-    private Date start;
+    private String name;
 
-    private Date end;
+    private Long dateStart;
+
+    private Long dateEnd;
 
     private Boolean notificationStatus = false;
 
@@ -19,10 +23,13 @@ public class Tournament {
 
     private Boolean live = false;
 
-    public Tournament(String title, Date start, Date end, String status, boolean live) {
-        this.title = title;
-        this.end = end;
-        this.start = start;
+    public Tournament() {
+    }
+
+    public Tournament(String name, Long start, Long dateEnd, String status, boolean live) {
+        this.name = name;
+        this.dateEnd = dateEnd;
+        this.dateStart = start;
         this.status = status;
         this.live = live;
     }
@@ -51,27 +58,27 @@ public class Tournament {
         this.notificationStatus = notificationStatus;
     }
 
-    public Date getStart() {
-        return start;
+    public Long getDateStart() {
+        return dateStart;
     }
 
-    public void setStart(Date start) {
-        this.start = start;
+    public void setDateStart(Long dateStart) {
+        this.dateStart = dateStart;
     }
 
-    public Date getEnd() {
-        return end;
+    public Long getDateEnd() {
+        return dateEnd;
     }
 
-    public void setEnd(Date end) {
-        this.end = end;
+    public void setDateEnd(Long dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 }

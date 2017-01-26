@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">Live Chess</string>
+    <string name="app_name">ICS Live!</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_launch">Live Chess</string>
 
 
     <string name="pgn1">
@@ -21,4 +20,5 @@
 9.h5 gxh5 10.Rxh5 Nf6 11.Rh4 Nc6 12.Be3 Qa5 13.Bd3 cxd4 14.Nxd4 Nxd4 15.Bxd4 e5
 16.fxe5 dxe5 17.Be3 e4 18.Bc4+ Kh8 19.Qd4 Bg4 20.Bb3 Rac8 21.Bd2 Qa6 22.Qe3 Nd5
     </string>
+    <string name="title_activity_tournament_activity_new">TournamentActivityNew</string>
 </resources>
